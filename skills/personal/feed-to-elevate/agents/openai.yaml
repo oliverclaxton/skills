@@ -1,0 +1,3 @@
+interface:
+  display_name: "Feed to Elevate"
+  short_description: "Reshape any product feed into the Elevate import CSV"
