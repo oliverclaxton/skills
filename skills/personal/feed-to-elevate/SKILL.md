@@ -23,7 +23,7 @@ Settle these before writing code, in this order — each later one depends on th
 
 1. **Group Key** — the parent that owns all colours/sizes of one style.
 2. **Product Key** — one per colour (or per style if there's no colour split). Must differ from the Group Key.
-3. **Variant identity** — `Elevate Size`, and `Elevate Variant SKU` whenever sizes can collide within a product.
+3. **Variant identity** — `Elevate Size`, unique within each product (a repeated size fails import even with distinct Variant SKUs; collapse or rename, and report it). `Elevate Variant SKU` for a stable id.
 4. **Every other column** — map, derive, or leave out.
 
 Derive keys from the data, not from column names: check that a candidate parent really has several children (`groupby().nunique()`), and that a "SKU minus last segment" trick only collapses rows within one parent. If the grain is genuinely ambiguous (e.g. two plausible parent columns), ask the user one question with the counts as evidence; otherwise decide and state the choice.

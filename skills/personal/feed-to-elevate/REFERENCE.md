@@ -13,8 +13,8 @@ Header matching is case-insensitive and exact for the `Elevate …` names; anyth
 | `Elevate Stock` | yes | Whole number ≥ 0. Turn "in stock"/"out of stock" into 1/0 |
 | `Elevate List Price` | yes | Plain decimal with `.`: `1299.00`. No currency, no thousands separators (the tool treats `,` as a decimal point) |
 | `Elevate Selling Price` | yes | ≤ List Price. Equal to List Price when there's no sale |
-| `Elevate Size` | with variants | ≤ 127 chars (variant label limit). Unique per variant within a product, or supply `Elevate Variant SKU` |
-| `Elevate Variant SKU` | recommended | Unique per row; becomes the variant label (≤ 127 chars). Stops size collisions failing import |
+| `Elevate Size` | with variants | ≤ 127 chars (variant label limit). **Must be unique per variant within a product** — the import fails with `Duplicate label value` on a repeated size even if Variant SKU differs. Collapse or rename repeats |
+| `Elevate Variant SKU` | recommended | Unique per row; identifier and label when no Size (≤ 127 chars). Does **not** rescue repeated sizes |
 | `Elevate Variant URL` | no | Relative path |
 | `Elevate Images` | no | ≤ 25 absolute URLs (`https://` or `//`), first is primary. Images are read from the first row of each product |
 | `Elevate Brand`, `Elevate Description` | no | Description: plain text preferred; HTML is stripped |
@@ -67,7 +67,7 @@ Group Key  (style)            ->  one Elevate product group
 
 ## Limits the checker enforces
 
-Product/Group keys `A-Za-z0-9#+./_-` ≤ 47 · Variant SKU / Size (variant label) ≤ 127 · Selling ≤ List · Cost > 0 and < Selling · images ≤ 25 and absolute · category ≤ 100 · age/department/product type ≤ 20 · series ≤ 20 chars · a product with several variants needs a unique size or Variant SKU on each.
+Product/Group keys `A-Za-z0-9#+./_-` ≤ 47 · Variant SKU / Size (variant label) ≤ 127 · Selling ≤ List · Cost > 0 and < Selling · images ≤ 25 and absolute · category ≤ 100 · age/department/product type ≤ 20 · series ≤ 20 chars · a product with several variants needs a unique Size on each (and a Variant SKU if it has no Size).
 
 ## Source of truth
 

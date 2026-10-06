@@ -98,8 +98,8 @@ def main(path):
         ids = [(size[i] or label[i]) for i in idx]
         if "" in ids:
             err(f"Product '{k}' has {len(idx)} variants but some lack Size/Variant SKU", line(idx)); break
-        if len(set(ids)) < len(ids) and len({label[i] for i in idx}) < len(idx):
-            err(f"Product '{k}' has variants with the same size and no unique Variant SKU", line(idx)); break
+        if len(set(ids)) < len(ids):
+            err(f"Product '{k}' repeats a Size across variants (import fails with 'Duplicate label value' even when Variant SKU differs) — collapse or rename", line(idx)); break
     if not has("Elevate Variant SKU") and dup_keys:
         warn("no 'Elevate Variant SKU' column — the tool falls back to Product Key as variant label, which collides for sibling rows")
     if has("Elevate Group Key") and (grp != "").any():
