@@ -122,6 +122,9 @@ def main(path):
         if has(c):
             n = df[c].apply(lambda s: len([x for x in s.split("|") if x.strip()]))
             if (n > lim).any(): err(f"{c} has more than {lim} values on a row", line(df.index[n > lim]))
+    for col in ("Elevate Variant SKU", "Elevate Size"):
+        if has(col) and (df[col].str.len() > 127).any():
+            err(f"{col} longer than 127 chars (variant label limit)", line(df.index[df[col].str.len() > 127]))
     if has("Elevate Series") and (df["Elevate Series"].str.len() > 20).any(): err("Elevate Series longer than 20 chars")
     for c in df.columns:
         if c.lower().startswith("customlabel"):
